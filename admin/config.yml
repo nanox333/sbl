@@ -7,6 +7,8 @@ backend:
 
 local_backend: true # Enable local testing with Netlify proxy (run `npx netlify-cms-proxy-server`)
 
+base_url: https://samuelliljenberg.netlify.app
+
 media_folder: "static/assets/uploads" # Where uploaded files are stored IN THE REPO
 public_folder: "/assets/uploads"    # How files are accessed by the browser
 
