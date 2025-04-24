@@ -1,5 +1,5 @@
 backend:
-  name: github
+  # name: github
   repo: nanox333/sbl # e.g., samuel-liljenberg/portfolio-site
   branch: main # Or whichever branch you use for production
   # Optional: Enable Netlify Identity/Git Gateway for better security/user management
