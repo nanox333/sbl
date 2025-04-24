@@ -512,8 +512,8 @@
     "zwitch": "^1.0.5"
   },
   "scripts": {
-    "start": "eleventy --serve", // For local development
-    "build": "eleventy"        // For production build
+    "start": "eleventy --serve",
+    "build": "eleventy"
   },
   "repository": {
     "type": "git",
@@ -528,6 +528,6 @@
   "homepage": "https://github.com/nanox333/sbl#readme",
   "description": "Samuel B Liljenberg Portfolio"
   "devDependencies": {
-    "@11ty/eleventy": "^2.0.1", // Use current version
-    "netlify-cms-app": "^2.15.72" // Use current version
+    "@11ty/eleventy": "^2.0.1",
+    "netlify-cms-app": "^2.15.72"
 }
