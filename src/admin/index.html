@@ -4,10 +4,27 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Manager</title>
+  <!-- Load scripts normally -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script src="https://unpkg.com/netlify-cms@2.10.192/dist/netlify-cms.js"></script>
 </head>
 <body>
-  <!-- Body is empty - CMS injects itself here -->
+  <!-- Empty Body -->
+
+  <!-- Add explicit init *after* body, within DOMContentLoaded -->
+  <script>
+    // Wait for the main HTML document structure to be ready
+    window.addEventListener('DOMContentLoaded', (event) => {
+      console.log('DOM fully loaded and parsed');
+      // Now, check if CMS object exists and initialize
+      if (window.CMS) {
+         console.log('CMS object found, initializing...');
+         window.CMS.init();
+         console.log('CMS.init() called.');
+      } else {
+         console.error('CMS object NOT found on DOMContentLoaded!');
+      }
+    });
+  </script>
 </body>
 </html>
