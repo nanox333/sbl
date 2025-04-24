@@ -6,7 +6,6 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addWatchTarget("./src/assets/css/");
   eleventyConfig.addWatchTarget("./src/assets/js/");
 
-<<<<<<< HEAD
   // --- Passthrough Copies for Static Files ---
 
   // 1. Copy the CMS admin interface
@@ -23,19 +22,6 @@ module.exports = function(eleventyConfig) {
   // This makes it fetchable by the client-side script.
   // Using an object format allows specifying the output path explicitly.
   eleventyConfig.addPassthroughCopy({"src/_data": "_data"});
-
-  // --- Keep your other Eleventy configurations below ---
-  // eleventyConfig.addFilter(...);
-  // eleventyConfig.addCollection(...);
-=======
-  // Passthrough copy for static files (like CMS admin, images, CSS, JS)
-  // Copy `static` contents to the root of the build output.
-  eleventyConfig.addPassthroughCopy("static");
-  // Copy src/assets contents to /assets in the build output.
-  eleventyConfig.addPassthroughCopy({"src/assets": "assets"});
-    // Copy Netlify CMS admin files TO THE ROOT of the output
-  eleventyConfig.addPassthroughCopy("admin");
->>>>>>> 50cd587b56b8bfd2d5eec63562822c767528ef84
 
 
   // Base config
