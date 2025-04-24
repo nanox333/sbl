@@ -3,12 +3,19 @@ backend:
   repo: nanox333/sbl # e.g., samuel-liljenberg/portfolio-site
   branch: main # Or whichever branch you use for production
   # Optional: Enable Netlify Identity/Git Gateway for better security/user management
-  name: git-gateway
+  # name: git-gateway
 
 local_backend: true # Enable local testing with Netlify proxy (run `npx netlify-cms-proxy-server`)
 
+<<<<<<< HEAD:src/admin/config.yml
 media_folder: "src/assets/uploads" # Relative to repo root for saving
 public_folder: "/assets/uploads"   # Public path after build
+=======
+base_url: https://samuelliljenberg.netlify.app
+
+media_folder: "static/assets/uploads" # Where uploaded files are stored IN THE REPO
+public_folder: "/assets/uploads"    # How files are accessed by the browser
+>>>>>>> 50cd587b56b8bfd2d5eec63562822c767528ef84:admin/config.yml
 
 # Define the content structure editable by the CMS
 collections:
