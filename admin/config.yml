@@ -22,7 +22,7 @@ collections:
     files:              # This is a "files" collection - edit specific files
       - label: "Huvudinnehåll / Main Content"
         name: "content" # Corresponds to src/_data/content.json filename
-        file: "src/_data/content.json"
+        file: "src/_data/pageData.json"
         fields:
           - { label: "Sidtitel (SV)", name: "title_sv", widget: "string" }
           - { label: "Sidtitel (EN)", name: "title_en", widget: "string" }

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 {# Use language from content data, default to sv #}
-<html lang="{{ content.lang | default('sv') }}">
+<html lang="{{ pageData.lang | default('sv') }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {# Dynamically set title based on language #}
-    <title data-lang-key="pageTitle">{{ content.title_sv if content.lang == 'sv' else content.title_en }}</title>
+    <title data-lang-key="pageTitle">{{ pageData.title_sv if pageData.lang == 'sv' else pageData.title_en }}</title>
     <link rel="stylesheet" href="/assets/css/style.css"> {# Path relative to output _site #}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,7 +15,7 @@
 
     <header>
         <div class="container header-content">
-            <a href="#home" class="logo">{{ content.footer_section.name }}</a>
+            <a href="#home" class="logo">{{ pageData.footer_section.name }}</a>
             <nav>
                 {# Navigation links will be handled by JS based on language #}
                 <ul>
@@ -40,7 +40,7 @@
 
     <footer>
         <div class="container">
-            <p>© <span id="current-year"></span> {{ content.footer_section.name }}. <span data-lang-key="footerRights">{{ content.footer_section.rights_sv }}</span></p>
+            <p>© <span id="current-year"></span> {{ pageData.footer_section.name }}. <span data-lang-key="footerRights">{{ pageData.footer_section.rights_sv }}</span></p>
         </div>
     </footer>
 
