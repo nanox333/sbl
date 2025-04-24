@@ -3,7 +3,7 @@ backend:
   repo: nanox333/sbl # e.g., samuel-liljenberg/portfolio-site
   branch: main # Or whichever branch you use for production
   # Optional: Enable Netlify Identity/Git Gateway for better security/user management
-  # name: git-gateway
+  name: git-gateway
 
 local_backend: true # Enable local testing with Netlify proxy (run `npx netlify-cms-proxy-server`)
 
