@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+{# Use language from content data, default to sv #}
+<html lang="{{ content.lang | default('sv') }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {# Dynamically set title based on language #}
+    <title data-lang-key="pageTitle">{{ content.title_sv if content.lang == 'sv' else content.title_en }}</title>
+    <link rel="stylesheet" href="/assets/css/style.css"> {# Path relative to output _site #}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <a href="#home" class="logo">{{ content.footer_section.name }}</a>
+            <nav>
+                {# Navigation links will be handled by JS based on language #}
+                <ul>
+                    <li><a href="#home" data-lang-key="navHome">Hem</a></li>
+                    <li><a href="#about" data-lang-key="navAbout">Om Mig</a></li>
+                    <li><a href="#experience" data-lang-key="navExperience">Erfarenhet</a></li>
+                    <li><a href="#education" data-lang-key="navEducation">Utbildning</a></li>
+                    <li><a href="#contact" data-lang-key="navContact">Kontakt</a></li>
+                </ul>
+            </nav>
+            <div class="lang-switch">
+                <button id="lang-sv">SV</button>
+                <button id="lang-en">EN</button>
+            </div>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">☰</button>
+        </div>
+    </header>
+
+    <main>
+        {{ content | safe }} {# Injects content from index.njk #}
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© <span id="current-year"></span> {{ content.footer_section.name }}. <span data-lang-key="footerRights">{{ content.footer_section.rights_sv }}</span></p>
+        </div>
+    </footer>
+
+    {# Pass data to JavaScript #}
+    <script>
+      window.portfolioData = {{ content | dump | safe }};
+    </script>
+    <script src="/assets/js/script.js"></script> {# Path relative to output _site #}
+</body>
+</html>

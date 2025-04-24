@@ -1,0 +1,64 @@
+{
+  "title_sv": "Samuel B Liljenberg | Ekonomistudent (Init)",
+  "title_en": "Samuel B Liljenberg | Economics Student (Init)",
+  "headshot": "/assets/images/samuel_headshot.jpg",
+  "cv_sv": "/assets/cv/Samuel_Liljenberg_CV_SV.pdf",
+  "cv_en": "/assets/cv/Samuel_Liljenberg_CV_EN.pdf",
+  "hero_section": {
+    "title_sv": "...",
+    "title_en": "...",
+    "subtitle_sv": "...",
+    "subtitle_en": "...",
+    "contact_btn_sv": "...",
+    "contact_btn_en": "...",
+    "cv_btn_sv": "...",
+    "cv_btn_en": "..."
+  },
+  "about_section": {
+    "title_sv": "...",
+    "title_en": "...",
+    "text1_sv": "...",
+    "text1_en": "...",
+    "text2_sv": "...",
+    "text2_en": "...",
+    "skills_title_sv": "...",
+    "skills_title_en": "...",
+    "skills": [
+      { "skill_sv": "...", "skill_en": "..." }
+    ]
+  },
+  "experience_section": {
+     "title_sv": "...",
+     "title_en": "...",
+     "jobs": [
+       { "title_sv": "...", "title_en": "...", "company": "...", "dates_sv": "...", "dates_en": "...", "desc_sv": ["..."], "desc_en": ["..."] }
+     ]
+  },
+   "education_section": {
+     "title_sv": "...",
+     "title_en": "...",
+     "educations": [
+        { "title_sv": "...", "title_en": "...", "institution": "...", "dates_sv": "...", "dates_en": "...", "details_sv": "...", "details_en": "..."}
+     ],
+     "lang_title_sv": "...",
+     "lang_title_en": "...",
+     "languages": [
+        { "name_sv": "...", "name_en": "...", "level_sv": "...", "level_en": "..." }
+     ]
+   },
+   "contact_section": {
+     "title_sv": "...",
+     "title_en": "...",
+     "intro_sv": "...",
+     "intro_en": "...",
+     "email_label_sv": "...", "email_label_en": "...", "email_address": "...",
+     "phone_label_sv": "...", "phone_label_en": "...", "phone_number": "...",
+     "linkedin_label_sv": "...", "linkedin_label_en": "...", "linkedin_link_text_sv": "...", "linkedin_link_text_en": "...", "linkedin_url": "...",
+     "location_label_sv": "...", "location_label_en": "...", "location_text_sv": "...", "location_text_en": "..."
+   },
+   "footer_section": {
+       "rights_sv": "...",
+       "rights_en": "...",
+       "name": "Samuel B Liljenberg"
+   }
+}

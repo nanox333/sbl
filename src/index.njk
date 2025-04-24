@@ -1,0 +1,96 @@
+---
+layout: layouts/base.njk
+# Access data from src/_data/content.json, Eleventy makes it available as 'content'
+eleventyComputed:
+  content: "{{ content }}"
+---
+
+{# Hero Section #}
+<section id="home" class="hero">
+    <div class="container hero-content">
+        <img src="{{ content.headshot }}" alt="{{ content.footer_section.name }} Headshot" class="headshot">
+        <div>
+            <h1 data-lang-key="heroTitle">{{ content.hero_section.title_sv }}</h1>
+            <p class="subtitle" data-lang-key="heroSubtitle">{{ content.hero_section.subtitle_sv }}</p>
+            <div class="hero-buttons">
+                 <a href="#contact" class="button" data-lang-key="heroContactBtn">{{ content.hero_section.contact_btn_sv }}</a>
+                 <a href="{{ content.cv_sv }}" target="_blank" rel="noopener noreferrer" class="button secondary" data-lang-key="heroCvBtn" id="cv-download-link">{{ content.hero_section.cv_btn_sv }}</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# About Section #}
+<section id="about" class="about section-padding">
+    <div class="container">
+        <h2 data-lang-key="aboutTitle">{{ content.about_section.title_sv }}</h2>
+        <p data-lang-key="aboutText1">{{ content.about_section.text1_sv }}</p>
+        <p data-lang-key="aboutText2">{{ content.about_section.text2_sv }}</p>
+        <h3 data-lang-key="skillsTitle">{{ content.about_section.skills_title_sv }}</h3>
+        <ul class="skills">
+            {% for item in content.about_section.skills %}
+            <li data-lang-key="skill_{{ loop.index }}">{{ item.skill_sv }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+
+{# Experience Section #}
+<section id="experience" class="experience section-padding alt-bg">
+    <div class="container">
+        <h2 data-lang-key="experienceTitle">{{ content.experience_section.title_sv }}</h2>
+        <div class="timeline">
+            {% for job in content.experience_section.jobs %}
+            <div class="timeline-item card">
+                <h3 data-lang-key="exp{{ loop.index }}Title">{{ job.title_sv }}</h3>
+                <p class="company">{{ job.company }}</p>
+                <p class="dates" data-lang-key="exp{{ loop.index }}Dates">{{ job.dates_sv }}</p>
+                <ul data-lang-key="exp{{ loop.index }}Desc">
+                    {% for desc_item in job.desc_sv %}
+                    <li>{{ desc_item }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{# Education Section #}
+<section id="education" class="education section-padding">
+    <div class="container">
+        <h2 data-lang-key="educationTitle">{{ content.education_section.title_sv }}</h2>
+        <div class="timeline">
+            {% for edu in content.education_section.educations %}
+             <div class="timeline-item card">
+                <h3 data-lang-key="edu{{ loop.index }}Title">{{ edu.title_sv }}</h3>
+                <p class="institution">{{ edu.institution }}</p>
+                <p class="dates" data-lang-key="edu{{ loop.index }}Dates">{{ edu.dates_sv }}</p>
+                {% if edu.details_sv %}
+                <p class="details" data-lang-key="edu{{ loop.index }}Details">{{ edu.details_sv }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+         <h3 data-lang-key="languagesTitle">{{ content.education_section.lang_title_sv }}</h3>
+         <div class="language-info">
+            {% for lang in content.education_section.languages %}
+             <p><strong data-lang-key="lang{{ loop.index }}Name">{{ lang.name_sv }}:</strong> <span data-lang-key="lang{{ loop.index }}Level">{{ lang.level_sv }}</span></p>
+            {% endfor %}
+         </div>
+    </div>
+</section>
+
+{# Contact Section #}
+<section id="contact" class="contact section-padding alt-bg">
+    <div class="container">
+        <h2 data-lang-key="contactTitle">{{ content.contact_section.title_sv }}</h2>
+        <p class="contact-intro" data-lang-key="contactIntro">{{ content.contact_section.intro_sv }}</p>
+        <div class="contact-info">
+            <p><strong data-lang-key="contactEmailLabel">{{ content.contact_section.email_label_sv }}</strong> <a href="mailto:{{ content.contact_section.email_address }}">{{ content.contact_section.email_address }}</a></p>
+            <p><strong data-lang-key="contactPhoneLabel">{{ content.contact_section.phone_label_sv }}</strong> <a href="tel:{{ content.contact_section.phone_number | replace(' ', '') }}">{{ content.contact_section.phone_number }}</a></p>
+            <p><strong data-lang-key="contactLinkedInLabel">{{ content.contact_section.linkedin_label_sv }}</strong> <a href="{{ content.contact_section.linkedin_url }}" target="_blank" rel="noopener noreferrer" data-lang-key="contactLinkedInLinkText">{{ content.contact_section.linkedin_link_text_sv }}</a></p>
+            <p><strong data-lang-key="contactLocationLabel">{{ content.contact_section.location_label_sv }}</strong> <span data-lang-key="contactLocationText">{{ content.contact_section.location_text_sv }}</span></p>
+        </div>
+    </div>
+</section>

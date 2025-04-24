@@ -1,0 +1,148 @@
+backend:
+  name: github
+  repo: nanox333/sbl # e.g., samuel-liljenberg/portfolio-site
+  branch: main # Or whichever branch you use for production
+  # Optional: Enable Netlify Identity/Git Gateway for better security/user management
+  # name: git-gateway
+
+local_backend: true # Enable local testing with Netlify proxy (run `npx netlify-cms-proxy-server`)
+
+media_folder: "static/assets/uploads" # Where uploaded files are stored IN THE REPO
+public_folder: "/assets/uploads"    # How files are accessed by the browser
+
+# Define the content structure editable by the CMS
+collections:
+  - name: "page_content"
+    label: "Sidans Innehåll / Page Content"
+    label_singular: "Sida / Page"
+    folder: "src/_data" # Save data file here
+    create: false       # Don't allow creating new files in this collection
+    slug: "{{slug}}"     # Not really used here, but required
+    format: "json"     # Save as JSON
+    files:              # This is a "files" collection - edit specific files
+      - label: "Huvudinnehåll / Main Content"
+        name: "content" # Corresponds to src/_data/content.json filename
+        file: "src/_data/content.json"
+        fields:
+          - { label: "Sidtitel (SV)", name: "title_sv", widget: "string" }
+          - { label: "Sidtitel (EN)", name: "title_en", widget: "string" }
+          - { label: "Huvudbild / Headshot", name: "headshot", widget: "image", required: false, media_folder: "static/assets/images", public_folder: "/assets/images" } # Specific folder
+          - { label: "CV Fil (SV)", name: "cv_sv", widget: "file", required: false, media_folder: "static/assets/cv", public_folder: "/assets/cv" } # Specific folder
+          - { label: "CV Fil (EN)", name: "cv_en", widget: "file", required: false, media_folder: "static/assets/cv", public_folder: "/assets/cv" } # Specific folder
+
+          - label: "Hero Sektion"
+            name: "hero_section"
+            widget: "object"
+            fields:
+              - { label: "Rubrik (SV)", name: "title_sv", widget: "string" }
+              - { label: "Rubrik (EN)", name: "title_en", widget: "string" }
+              - { label: "Underrubrik (SV)", name: "subtitle_sv", widget: "text" }
+              - { label: "Underrubrik (EN)", name: "subtitle_en", widget: "text" }
+              - { label: "Kontakt Knapp Text (SV)", name: "contact_btn_sv", widget: "string" }
+              - { label: "Kontakt Knapp Text (EN)", name: "contact_btn_en", widget: "string" }
+              - { label: "CV Knapp Text (SV)", name: "cv_btn_sv", widget: "string" }
+              - { label: "CV Knapp Text (EN)", name: "cv_btn_en", widget: "string" }
+
+          - label: "Om Mig Sektion"
+            name: "about_section"
+            widget: "object"
+            fields:
+              - { label: "Rubrik (SV)", name: "title_sv", widget: "string" }
+              - { label: "Rubrik (EN)", name: "title_en", widget: "string" }
+              - { label: "Text Stycke 1 (SV)", name: "text1_sv", widget: "text" }
+              - { label: "Text Stycke 1 (EN)", name: "text1_en", widget: "text" }
+              - { label: "Text Stycke 2 (SV)", name: "text2_sv", widget: "text" }
+              - { label: "Text Stycke 2 (EN)", name: "text2_en", widget: "text" }
+              - { label: "Kompetenser Rubrik (SV)", name: "skills_title_sv", widget: "string" }
+              - { label: "Kompetenser Rubrik (EN)", name: "skills_title_en", widget: "string" }
+              - label: "Kompetenslista / Skills List"
+                name: "skills"
+                widget: "list"
+                fields:
+                  - { label: "Kompetens (SV)", name: "skill_sv", widget: "string" }
+                  - { label: "Kompetens (EN)", name: "skill_en", widget: "string" }
+
+          - label: "Erfarenhet Sektion"
+            name: "experience_section"
+            widget: "object"
+            fields:
+              - { label: "Rubrik (SV)", name: "title_sv", widget: "string" }
+              - { label: "Rubrik (EN)", name: "title_en", widget: "string" }
+              - label: "Jobb / Jobs"
+                name: "jobs"
+                widget: "list"
+                fields:
+                  - { label: "Jobbtitel (SV)", name: "title_sv", widget: "string" }
+                  - { label: "Jobbtitel (EN)", name: "title_en", widget: "string" }
+                  - { label: "Företag & Plats", name: "company", widget: "string" }
+                  - { label: "Datum (SV)", name: "dates_sv", widget: "string" }
+                  - { label: "Datum (EN)", name: "dates_en", widget: "string" }
+                  - label: "Beskrivningspunkter (SV)"
+                    name: "desc_sv"
+                    widget: "list"
+                    field: { label: Punkt, name: item, widget: string }
+                  - label: "Beskrivningspunkter (EN)"
+                    name: "desc_en"
+                    widget: "list"
+                    field: { label: Item, name: item, widget: string }
+
+
+          - label: "Utbildning Sektion"
+            name: "education_section"
+            widget: "object"
+            fields:
+              - { label: "Rubrik (SV)", name: "title_sv", widget: "string" }
+              - { label: "Rubrik (EN)", name: "title_en", widget: "string" }
+              - label: "Utbildningar / Educations"
+                name: "educations"
+                widget: "list"
+                fields:
+                  - { label: "Titel/Program (SV)", name: "title_sv", widget: "string" }
+                  - { label: "Titel/Program (EN)", name: "title_en", widget: "string" }
+                  - { label: "Institution", name: "institution", widget: "string" }
+                  - { label: "Datum (SV)", name: "dates_sv", widget: "string", hint: "Inkludera (Pågående) om applicerbart" }
+                  - { label: "Datum (EN)", name: "dates_en", widget: "string", hint: "Include (Ongoing) if applicable" }
+                  - { label: "Detaljer/Inriktning (SV)", name: "details_sv", widget: "string", required: false }
+                  - { label: "Detaljer/Inriktning (EN)", name: "details_en", widget: "string", required: false }
+              - { label: "Språk Rubrik (SV)", name: "lang_title_sv", widget: "string"}
+              - { label: "Språk Rubrik (EN)", name: "lang_title_en", widget: "string"}
+              - label: "Språk / Languages"
+                name: "languages"
+                widget: "list"
+                fields:
+                  - { label: "Språk Namn (SV)", name: "name_sv", widget: "string"}
+                  - { label: "Språk Namn (EN)", name: "name_en", widget: "string"}
+                  - { label: "Nivå (SV)", name: "level_sv", widget: "string"}
+                  - { label: "Nivå (EN)", name: "level_en", widget: "string"}
+
+          - label: "Kontakt Sektion"
+            name: "contact_section"
+            widget: "object"
+            fields:
+              - { label: "Rubrik (SV)", name: "title_sv", widget: "string" }
+              - { label: "Rubrik (EN)", name: "title_en", widget: "string" }
+              - { label: "Intro Text (SV)", name: "intro_sv", widget: "text" }
+              - { label: "Intro Text (EN)", name: "intro_en", widget: "text" }
+              - { label: "Email Etikett (SV)", name: "email_label_sv", widget: "string" }
+              - { label: "Email Etikett (EN)", name: "email_label_en", widget: "string" }
+              - { label: "Email Adress", name: "email_address", widget: "string"}
+              - { label: "Telefon Etikett (SV)", name: "phone_label_sv", widget: "string" }
+              - { label: "Telefon Etikett (EN)", name: "phone_label_en", widget: "string" }
+              - { label: "Telefonnummer", name: "phone_number", widget: "string" }
+              - { label: "LinkedIn Etikett (SV)", name: "linkedin_label_sv", widget: "string" }
+              - { label: "LinkedIn Etikett (EN)", name: "linkedin_label_en", widget: "string" }
+              - { label: "LinkedIn Länk Text (SV)", name: "linkedin_link_text_sv", widget: "string" }
+              - { label: "LinkedIn Länk Text (EN)", name: "linkedin_link_text_en", widget: "string" }
+              - { label: "LinkedIn URL", name: "linkedin_url", widget: "string"}
+              - { label: "Plats Etikett (SV)", name: "location_label_sv", widget: "string" }
+              - { label: "Plats Etikett (EN)", name: "location_label_en", widget: "string" }
+              - { label: "Plats Text (SV)", name: "location_text_sv", widget: "string"}
+              - { label: "Plats Text (EN)", name: "location_text_en", widget: "string"}
+
+          - label: "Sidfot / Footer"
+            name: "footer_section"
+            widget: "object"
+            fields:
+              - { label: "Copyright Text (SV)", name: "rights_sv", widget: "string"}
+              - { label: "Copyright Text (EN)", name: "rights_en", widget: "string"}
+              - { label: "Namn", name: "name", widget: "string"}
