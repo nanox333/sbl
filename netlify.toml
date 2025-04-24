@@ -3,10 +3,10 @@
   publish = "_site"         # Directory Netlify deploys
 
 # Optional: Redirects for Netlify Identity/Git Gateway if needed later
-# [[redirects]]
-#   from = "/admin/*"
-#   to = "/admin/index.html"
-#   status = 200
+[[redirects]]
+   from = "/admin/*"
+   to = "/admin/index.html"
+   status = 200
 
 # [[redirects]]
 #   from = "/admin"
