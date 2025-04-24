@@ -4,14 +4,26 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Manager</title>
-  <!-- Include the Netlify CMS application -->
+
+  <!-- 1. Include the Netlify Identity widget script FIRST -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+  <!-- 2. Include the Netlify CMS script AFTER the Identity widget -->
+  <!-- Using the specific version you tried, which is fine -->
   <script src="https://unpkg.com/netlify-cms@2.10.192/dist/netlify-cms.js"></script>
+
 </head>
 <body>
-  <!-- Initialize Netlify CMS -->
+  <!--
+      There is NO NEED for the custom init script below.
+      Netlify CMS automatically initializes itself when both
+      scripts are loaded correctly and it finds a config.yml
+      or is configured via JS. Remove the custom script.
+  -->
+  <!--
+  REMOVE THIS SCRIPT BLOCK:
   <script>
   window.addEventListener('load', function() {
-    // Add a small delay using setTimeout
     setTimeout(function() {
       console.log("Attempting CMS.init()..."); // Add log
       if (window.CMS) {
@@ -22,6 +34,7 @@
       }
     }, 100); // Delay for 100 milliseconds
   });
-</script>
+  </script>
+  -->
 </body>
 </html>
