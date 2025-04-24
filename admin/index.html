@@ -5,16 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Manager</title>
   <!-- Include the Netlify CMS application -->
-  <script src="https://unpkg.com/netlify-cms-app@2.15.72/dist/netlify-cms-app.js"></script>
+  <script src="https://unpkg.com/netlify-cms-app@2.x/dist/netlify-cms-app.js"></script>
 </head>
 <body>
   <!-- Initialize Netlify CMS -->
   <script>
-    // Ensure the script runs after the CMS library is loaded
-    // Using addEventListener is slightly more modern than onload
-    window.addEventListener('load', function() {
-      CMS.init();
-    });
-  </script>
+  window.addEventListener('load', function() {
+    // Add a small delay using setTimeout
+    setTimeout(function() {
+      console.log("Attempting CMS.init()..."); // Add log
+      if (window.CMS) {
+        console.log("CMS object found, calling init.");
+        CMS.init();
+      } else {
+        console.error("CMS object still not defined after delay!");
+      }
+    }, 100); // Delay for 100 milliseconds
+  });
+</script>
 </body>
 </html>
