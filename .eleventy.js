@@ -9,6 +9,8 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("static");
   // Copy src/assets contents to /assets in the build output.
   eleventyConfig.addPassthroughCopy({"src/assets": "assets"});
+    // Copy Netlify CMS admin files TO THE ROOT of the output
+  eleventyConfig.addPassthroughCopy("admin");
 
 
   // Base config
