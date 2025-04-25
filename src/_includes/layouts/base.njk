@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {# Dynamically set title using data #}
-    <title data-lang-key="pageTitle">{{ pageData.title_sv }}</title> {# Default to SV, JS can update #}
+    {# Add data attributes if you want the title editable via Visual Editor #}
+    {# Note: Title might be better edited via form fields if available #}
+    <title data-lang-key="pageTitle" data-sb-object-id="src/_data/pageData.json" data-sb-field-path="title_sv">{{ pageData.title_sv }}</title> {# Default to SV, JS can update #}
     <link rel="stylesheet" href="/assets/css/style.css"> {# Correct path relative to output _site #}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,8 +17,10 @@
     <header>
         {# Header content using pageData... #}
         <div class="container header-content">
-            <a href="#home" class="logo">{{ pageData.footer_section.name }}</a>
+             {# Assuming footer_section.name controls the logo text #}
+            <a href="#home" class="logo" data-sb-object-id="src/_data/pageData.json" data-sb-field-path="footer_section.name">{{ pageData.footer_section.name }}</a>
             <nav>
+                {# Nav links are likely static or handled by JS, maybe not directly editable here #}
                 <ul>
                     <li><a href="#home" data-lang-key="navHome">Hem</a></li>
                     <li><a href="#about" data-lang-key="navAbout">Om Mig</a></li>
@@ -36,21 +39,19 @@
 
     <main>
         {# Injects content from the specific page file (e.g., index.njk) #}
+        {# The object ID might need to be added within index.njk sections #}
         {{ content | safe }}
     </main>
 
     <footer>
-        {# Footer content using pageData... #}
-         <div class="container">
-            <p>© <span id="current-year"></span> {{ pageData.footer_section.name }}. <span data-lang-key="footerRights">{{ pageData.footer_section.rights_sv }}</span></p> {# Default to SV #}
+        <div class="container" data-sb-object-id="src/_data/pageData.json"> {# Add object ID here for footer fields #}
+            <p>© <span id="current-year"></span> <span data-sb-field-path="footer_section.name">{{ pageData.footer_section.name }}</span>. <span data-lang-key="footerRights" data-sb-field-path="footer_section.rights_sv">{{ pageData.footer_section.rights_sv }}</span></p> {# Default to SV #}
         </div>
     </footer>
 
     {# Pass data to JavaScript - Pass the specific data needed #}
     <script>
-      // Pass the entire pageData object if your script needs it all
       window.portfolioData = {{ pageData | dump | safe }};
-      // Alternatively, only pass what's needed for client-side language switching/rendering
     </script>
     <script src="/assets/js/script.js"></script> {# Correct path relative to output _site #}
 </body>
