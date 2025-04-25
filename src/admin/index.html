@@ -3,28 +3,43 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" /> {# Prevents search engines from indexing the admin #}
   <title>Content Manager</title>
-  <!-- Load scripts normally -->
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <script src="https://unpkg.com/netlify-cms@2.10.192/dist/netlify-cms.js"></script>
+
+  {# Load Netlify CMS script #}
+  <script src="https://unpkg.com/netlify-cms-app@^2.0.0/dist/netlify-cms-app.js"></script>
+
+  {# Optional: Include Netlify Identity Widget styles if using Git Gateway + Identity #}
+  <link rel="stylesheet" href="https://unpkg.com/netlify-identity-widget@^1.0.0/build/netlify-identity.css" />
+
 </head>
 <body>
-  <!-- Empty Body -->
+  {# Netlify CMS will mount its UI here. THIS IS THE CRUCIAL ELEMENT #}
+  <div id="nc-root"></div>
 
-  <!-- Add explicit init *after* body, within DOMContentLoaded -->
+  {# Initialize Netlify CMS. It will automatically look for /admin/config.yml #}
   <script>
-    // Wait for the main HTML document structure to be ready
-    window.addEventListener('DOMContentLoaded', (event) => {
-      console.log('DOM fully loaded and parsed');
-      // Now, check if CMS object exists and initialize
-      if (window.CMS) {
-         console.log('CMS object found, initializing...');
-         window.CMS.init();
-         console.log('CMS.init() called.');
-      } else {
-         console.error('CMS object NOT found on DOMContentLoaded!');
-      }
-    });
+    CMS.init();
   </script>
+
+  {# Optional: Include Netlify Identity Widget script if using Git Gateway + Identity #}
+  {# Make sure this comes AFTER the CMS script but ideally before CMS.init() or handle async loading carefully #}
+  <script src="https://unpkg.com/netlify-identity-widget@^1.0.0/build/netlify-identity-widget.js"></script>
+  <script>
+    // Initialize Identity Widget AFTER its script has loaded
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            // Redirect to admin after login
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    } else {
+      console.warn("Netlify Identity Widget script not loaded yet.");
+    }
+  </script>
+
 </body>
 </html>
