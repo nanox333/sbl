@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-{# Use language from content data, default to sv #}
-<html lang="{{ pageData.lang | default('sv') }}">
+{# Assumes pageData is loaded from src/_data/pageData.json by Eleventy #}
+<html lang="{{ pageData.current_lang | default('sv') }}"> {# Use a variable like 'current_lang' set by JS #}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {# Dynamically set title based on language #}
-    <title data-lang-key="pageTitle">{{ pageData.title_sv if pageData.lang == 'sv' else pageData.title_en }}</title>
-    <link rel="stylesheet" href="/assets/css/style.css"> {# Path relative to output _site #}
+    {# Dynamically set title using data #}
+    <title data-lang-key="pageTitle">{{ pageData.title_sv }}</title> {# Default to SV, JS can update #}
+    <link rel="stylesheet" href="/assets/css/style.css"> {# Correct path relative to output _site #}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
@@ -14,10 +14,10 @@
 <body>
 
     <header>
+        {# Header content using pageData... #}
         <div class="container header-content">
             <a href="#home" class="logo">{{ pageData.footer_section.name }}</a>
             <nav>
-                {# Navigation links will be handled by JS based on language #}
                 <ul>
                     <li><a href="#home" data-lang-key="navHome">Hem</a></li>
                     <li><a href="#about" data-lang-key="navAbout">Om Mig</a></li>
@@ -35,19 +35,23 @@
     </header>
 
     <main>
-        {{ content | safe }} {# Injects content from index.njk #}
+        {# Injects content from the specific page file (e.g., index.njk) #}
+        {{ content | safe }}
     </main>
 
     <footer>
-        <div class="container">
-            <p>© <span id="current-year"></span> {{ pageData.footer_section.name }}. <span data-lang-key="footerRights">{{ pageData.footer_section.rights_sv }}</span></p>
+        {# Footer content using pageData... #}
+         <div class="container">
+            <p>© <span id="current-year"></span> {{ pageData.footer_section.name }}. <span data-lang-key="footerRights">{{ pageData.footer_section.rights_sv }}</span></p> {# Default to SV #}
         </div>
     </footer>
 
-    {# Pass data to JavaScript #}
+    {# Pass data to JavaScript - Pass the specific data needed #}
     <script>
-      window.portfolioData = {{ content | dump | safe }};
+      // Pass the entire pageData object if your script needs it all
+      window.portfolioData = {{ pageData | dump | safe }};
+      // Alternatively, only pass what's needed for client-side language switching/rendering
     </script>
-    <script src="/assets/js/script.js"></script> {# Path relative to output _site #}
+    <script src="/assets/js/script.js"></script> {# Correct path relative to output _site #}
 </body>
 </html>

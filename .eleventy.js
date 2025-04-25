@@ -1,41 +1,46 @@
+// .eleventy.js
 module.exports = function(eleventyConfig) {
 
-  // Tell Eleventy to watch CSS/JS folders for changes.
-  // Note: Passthrough copies are typically NOT watched by default,
-  // this ensures changes trigger a rebuild during development (`eleventy --serve`).
+  // Watching asset folders for changes during development
   eleventyConfig.addWatchTarget("./src/assets/css/");
   eleventyConfig.addWatchTarget("./src/assets/js/");
 
-  // --- Passthrough Copies for Static Files ---
+  // --- Passthrough Copies ---
 
-  // 1. Copy the CMS admin interface
-  // Copies contents of 'src/admin' to '_site/admin'
+  // 1. Copy the CMS admin interface folder **CRITICAL**
+  // Copies src/admin/index.html and src/admin/config.yml to _site/admin/
   eleventyConfig.addPassthroughCopy("src/admin");
 
-  // 2. Copy main assets (CSS, JS, Images)
-  // Copies 'src/assets/' contents to '_site/assets/'
-  // This single line handles css, js, img, and the uploads folder if it's inside assets.
+  // 2. Copy the entire assets folder **CRITICAL**
+  // Copies src/assets/* to _site/assets/*
+  // This includes CSS, JS, images, cv, and the uploads folder for media.
   eleventyConfig.addPassthroughCopy("src/assets");
 
-  // 3. Copy the CMS content data file
-  // Copies 'src/_data/content.json' to '_site/_data/content.json'
-  // This makes it fetchable by the client-side script.
-  // Using an object format allows specifying the output path explicitly.
-  eleventyConfig.addPassthroughCopy({"src/_data": "_data"});
+  // 3. Copying _data is NOT needed for Eleventy's data cascade. **REMOVE THIS**
+  // Eleventy automatically reads from src/_data/. Copying it to the output
+  // (_site/_data) is usually unnecessary unless specifically fetched client-side.
+  // eleventyConfig.addPassthroughCopy({"src/_data": "_data"});
 
 
-  // Base config
+  // --- Base Eleventy Configuration ---
   return {
+    // Define directory structure
     dir: {
-      input: "src",       // Source directory is correct
-      includes: "_includes", // Default is usually fine
-      data: "_data",       // Default is usually fine (relative to input)
-      output: "_site"      // Build output directory (default)
+      input: "src",         // Source files location
+      includes: "_includes", // Nunjucks includes folder (relative to input)
+      layouts: "_includes/layouts", // Layouts folder (if you create one, relative to input) - Your base.njk is currently in _includes, adjust if needed.
+      data: "_data",         // Global data folder (relative to input)
+      output: "_site"        // Build output directory
     },
-    // passthroughFileCopy: true, // This is often default or handled by addPassthroughCopy,
-                                // but keeping it doesn't usually hurt.
-    templateFormats: ["md", "njk", "html"], // Process these file types
-    htmlTemplateEngine: "njk",              // Use Nunjucks for .html files
-    markdownTemplateEngine: "njk"           // Use Nunjucks within .md files
+
+    // Specify which template languages to process
+    templateFormats: ["md", "njk", "html"],
+
+    // Use Nunjucks as the engine for markdown files (for includes, etc.)
+    markdownTemplateEngine: "njk",
+
+    // Use Nunjucks as the engine for standalone .html files (allows Nunjucks in HTML)
+    // Be cautious if you have many static HTML files you *don't* want processed.
+    htmlTemplateEngine: "njk"
   };
 };

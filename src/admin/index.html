@@ -6,38 +6,43 @@
   <meta name="robots" content="noindex" />
   <title>Content Manager</title>
 
-  <!-- Load Netlify CMS script (Correct specific version) -->
+  <!-- Load Netlify CMS script (Specific version) -->
   <script src="https://unpkg.com/netlify-cms-app@2.10.192/dist/netlify-cms-app.js"></script>
 
-  <!-- Load Netlify Identity Widget CSS (Correct specific version) -->
+  <!-- Load Netlify Identity Widget CSS (Specific version) -->
   <link rel="stylesheet" href="https://unpkg.com/netlify-identity-widget@1.9.4/build/netlify-identity.css" />
 </head>
 <body>
   <!-- Netlify CMS UI root element -->
   <div id="nc-root"></div>
 
+  <!-- Load Netlify Identity Widget JS (Specific version) -->
+  <!-- Load this *before* CMS.init() if possible, or ensure CMS waits -->
+  <script src="https://unpkg.com/netlify-identity-widget@1.9.4/build/netlify-identity-widget.js"></script>
+
   <!-- Initialize Netlify CMS -->
+  <!-- Place this after the CMS script AND the Identity widget script -->
   <script>
+    // Optional: Wait for Identity to be ready if you need user info during init
+    // window.netlifyIdentity.on('init', () => {
+    //   CMS.init();
+    // });
+    // Usually, just calling init() is fine here as long as the scripts above are loaded.
     CMS.init();
   </script>
 
-  <!-- Load Netlify Identity Widget JS (Correct specific version) -->
-  <script src="https://unpkg.com/netlify-identity-widget@1.9.4/build/netlify-identity-widget.js"></script>
-
-  <!-- Initialize Netlify Identity Widget -->
+  <!-- Initialize Netlify Identity Widget (Handles Login Flow) -->
   <script>
     if (window.netlifyIdentity) {
       window.netlifyIdentity.on("init", user => {
         if (!user) {
           window.netlifyIdentity.on("login", () => {
-            // Redirect to admin after login to ensure the CMS updates
-            document.location.href = "/admin/";
+            document.location.href = "/admin/"; // Redirect after login
           });
         }
       });
     } else {
-      // Optional: Log a warning if the script didn't load, though the CMS check should catch this too
-      console.warn("Netlify Identity Widget script not found.");
+      console.warn("Netlify Identity Widget script not found or loaded yet.");
     }
   </script>
 </body>
