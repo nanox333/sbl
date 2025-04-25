@@ -5,26 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex" />
   <title>Content Manager</title>
+
+  <!-- Load Netlify CMS script (Correct specific version) -->
   <script src="https://unpkg.com/netlify-cms-app@2.10.192/dist/netlify-cms-app.js"></script>
-     <link rel="stylesheet" href="https://unpkg.com/netlify-identity-widget@^1.0.0/build/netlify-identity.css" />
+
+  <!-- Load Netlify Identity Widget CSS (Correct specific version) -->
+  <link rel="stylesheet" href="https://unpkg.com/netlify-identity-widget@1.9.4/build/netlify-identity.css" />
 </head>
 <body>
+  <!-- Netlify CMS UI root element -->
   <div id="nc-root"></div>
+
+  <!-- Initialize Netlify CMS -->
   <script>
     CMS.init();
   </script>
-     <script src="https://unpkg.com/netlify-identity-widget@^1.0.0/build/netlify-identity-widget.js"></script>
-     <script>
+
+  <!-- Load Netlify Identity Widget JS (Correct specific version) -->
+  <script src="https://unpkg.com/netlify-identity-widget@1.9.4/build/netlify-identity-widget.js"></script>
+
+  <!-- Initialize Netlify Identity Widget -->
+  <script>
     if (window.netlifyIdentity) {
       window.netlifyIdentity.on("init", user => {
         if (!user) {
           window.netlifyIdentity.on("login", () => {
+            // Redirect to admin after login to ensure the CMS updates
             document.location.href = "/admin/";
           });
         }
       });
     } else {
-      console.warn("Netlify Identity Widget script not loaded yet.");
+      // Optional: Log a warning if the script didn't load, though the CMS check should catch this too
+      console.warn("Netlify Identity Widget script not found.");
     }
   </script>
 </body>
