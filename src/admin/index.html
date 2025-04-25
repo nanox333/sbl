@@ -7,10 +7,10 @@
   <title>Content Manager</title>
 
   {# Load Netlify CMS script #}
-  <script src="https://unpkg.com/netlify-cms-app@^2.0.0/dist/netlify-cms-app.js"></script>
+  <script src="https://unpkg.com/netlify-cms-app@2.0.0/dist/netlify-cms-app.js"></script>
 
   {# Optional: Include Netlify Identity Widget styles if using Git Gateway + Identity #}
-  <link rel="stylesheet" href="https://unpkg.com/netlify-identity-widget@^1.0.0/build/netlify-identity.css" />
+  <link rel="stylesheet" href="https://unpkg.com/netlify-identity-widget@2.0.0/build/netlify-identity.css" />
 
 </head>
 <body>
@@ -24,7 +24,7 @@
 
   {# Optional: Include Netlify Identity Widget script if using Git Gateway + Identity #}
   {# Make sure this comes AFTER the CMS script but ideally before CMS.init() or handle async loading carefully #}
-  <script src="https://unpkg.com/netlify-identity-widget@^1.0.0/build/netlify-identity-widget.js"></script>
+  <script src="https://unpkg.com/netlify-identity-widget@2.0.0/build/netlify-identity-widget.js"></script>
   <script>
     // Initialize Identity Widget AFTER its script has loaded
     if (window.netlifyIdentity) {
