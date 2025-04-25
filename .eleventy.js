@@ -15,15 +15,12 @@ module.exports = function(eleventyConfig) {
 
   // --- Base Eleventy Configuration ---
   return {
-    // Define directory structure
     dir: {
-      input: "src",         // Source files location
-      includes: "_includes", // Nunjucks includes folder (relative to input)
-      // --- CORRECTED THIS LINE ---
-      // Point layouts to the same directory as includes, because base.njk is in src/_includes/
-      layouts: "_includes",
-      data: "_data",         // Global data folder (relative to input)
-      output: "_site"        // Build output directory
+      input: "src",
+      includes: "_includes",
+      layouts: "_includes/layouts", // <--- MUST match the directory structure
+      data: "_data",
+      output: "_site"
     },
 
     // Specify which template languages to process
