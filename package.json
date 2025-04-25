@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/nanox333/sbl#readme",
   "devDependencies": {
-    "@11ty/eleventy": "^3.0.0"
+    "@11ty/eleventy": "^3.0.0",
+    "@stackbit/cms-git": "^1.0.35",
+    "@stackbit/types": "^2.1.14"
   },
   "dependencies": {
     "luxon": "^3.6.1"
