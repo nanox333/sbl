@@ -2,10 +2,23 @@
 import { defineStackbitConfig, Document } from '@stackbit/types';
 import { GitContentSource } from '@stackbit/cms-git';
 
-// Note: Reusable models are removed, definitions are now inline below
-
 export default defineStackbitConfig({
     stackbitVersion: '~0.6.0',
+    // --- Eleventy Specific Settings ---
+    ssgName: 'eleventy',
+    nodeVersion: '22', // Or '20', '22' etc. depending on your project/Netlify settings
+    devCommand: 'npx @11ty/eleventy --serve --port {PORT}',
+    experimental: {
+        ssg: {
+            proxyWebsockets: true,
+            logPatterns: {
+                up: ['Server available at'], // Adjusted based on Eleventy 3.x log message
+            }
+        }
+    },
+    customContentReload: true,
+    // ----------------------------------
+
     contentSources: [
         new GitContentSource({
             rootPath: __dirname,
@@ -16,6 +29,7 @@ export default defineStackbitConfig({
                     type: 'data',
                     label: 'Page Content',
                     file: 'pageData.json',
+                    // isSingleton removed based on previous TS error
                     fields: [
                         // Top Level Fields
                         { name: 'title_sv', type: 'string', label: 'Sidtitel (SV)', required: true },
@@ -51,7 +65,6 @@ export default defineStackbitConfig({
                                 { name: 'skills_title_en', type: 'string', label: 'Kompetenser Rubrik (EN)' },
                                 {
                                     name: 'skills', type: 'list', label: 'Kompetenslista',
-                                    // --- Define skill items inline ---
                                     items: {
                                         type: 'object',
                                         fields: [
@@ -70,7 +83,6 @@ export default defineStackbitConfig({
                                 { name: 'title_en', type: 'string', label: 'Rubrik (EN)' },
                                 {
                                     name: 'jobs', type: 'list', label: 'Jobb / Jobs',
-                                    // --- Define job items inline ---
                                     items: {
                                         type: 'object',
                                         fields: [
@@ -94,7 +106,6 @@ export default defineStackbitConfig({
                                 { name: 'title_en', type: 'string', label: 'Rubrik (EN)' },
                                 {
                                     name: 'educations', type: 'list', label: 'Utbildningar / Educations',
-                                    // --- Define education items inline ---
                                     items: {
                                         type: 'object',
                                         fields: [
@@ -112,7 +123,6 @@ export default defineStackbitConfig({
                                 { name: 'lang_title_en', type: 'string', label: 'Språk Rubrik (EN)' },
                                 {
                                     name: 'languages', type: 'list', label: 'Språk / Languages',
-                                    // --- Define language items inline ---
                                     items: {
                                         type: 'object',
                                         fields: [
