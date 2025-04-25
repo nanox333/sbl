@@ -17,22 +17,25 @@
   <div id="nc-root"></div>
 
   <!-- Load Netlify Identity Widget JS (Specific version) -->
-  <!-- Load this *before* CMS.init() if possible, or ensure CMS waits -->
   <script src="https://unpkg.com/netlify-identity-widget@1.9.4/build/netlify-identity-widget.js"></script>
 
   <!-- Initialize Netlify CMS -->
-  <!-- Place this after the CMS script AND the Identity widget script -->
+  <!-- This MUST run after netlify-cms-app.js has loaded and executed -->
   <script>
-    // Optional: Wait for Identity to be ready if you need user info during init
-    // window.netlifyIdentity.on('init', () => {
-    //   CMS.init();
-    // });
-    // Usually, just calling init() is fine here as long as the scripts above are loaded.
-    CMS.init();
+    // Make sure the DOM is ready AND the CMS object exists
+    // (This adds a safety check, though usually just placing it after the script tag is enough if loading works)
+    document.addEventListener('DOMContentLoaded', () => {
+        if (window.CMS) {
+            CMS.init();
+        } else {
+            console.error("CMS object not found on DOMContentLoaded!");
+        }
+    });
   </script>
 
   <!-- Initialize Netlify Identity Widget (Handles Login Flow) -->
   <script>
+    // Check for the Identity object *after* its script should have loaded
     if (window.netlifyIdentity) {
       window.netlifyIdentity.on("init", user => {
         if (!user) {
