@@ -1,0 +1,193 @@
+# Using Netlify Identity for authentication + Git Gateway for repo access
+backend:
+  name: git-gateway
+  branch: main # Or master, or your production branch
+
+# Optional: Enables the 'Workflow' tab in the CMS for draft/review/publish states
+# Recommended when using git-gateway
+publish_mode: editorial_workflow
+
+# Enable local testing with Netlify proxy (run `npx netlify-cms-proxy-server`)
+# Remove or set to false for production if not needed, but harmless to leave true
+local_backend: true
+
+# --- Media File Handling ---
+# NOTE: These paths are relative to the REPOSITORY ROOT for saving (`media_folder`)
+# and relative to the BUILT SITE ROOT for display (`public_folder`).
+# Your Eleventy config copies `src/assets` to `_site/assets`.
+
+# Default location for files uploaded via the main media library
+media_folder: "src/assets/uploads" # Saves to: repo-root/src/assets/uploads/
+public_folder: "/assets/uploads"   # Public URL: your-site.com/assets/uploads/
+
+# --- Content Collections ---
+collections:
+  - name: "page_content"       # Internal identifier for the collection
+    label: "Sidans Innehåll / Page Content" # Display name in CMS UI
+    label_singular: "Sida / Page"         # Display name for one item
+    folder: "src/_data"       # **IMPORTANT**: CMS saves the file to this folder IN THE REPO
+    create: false             # Prevent creating new files in src/_data via CMS
+    slug: "{{slug}}"          # Not used for 'files' collection, but required syntax
+    format: "json"            # Save file as JSON
+
+    # This defines it as a "Files Collection" - editing specific files, not a folder of files
+    files:
+      - label: "Huvudinnehåll / Main Content" # Display name for this specific file in UI
+        name: "pageData"        # Internal name (used if multiple files were listed)
+        # **IMPORTANT**: Path to the file TO BE EDITED, relative to repo root
+        file: "src/_data/pageData.json"
+        fields:                 # The fields editable within pageData.json
+          - { label: "Sidtitel (SV)", name: "title_sv", widget: "string" }
+          - { label: "Sidtitel (EN)", name: "title_en", widget: "string" }
+
+          # --- Field-specific Media Folders (Overrides Global) ---
+          - label: "Huvudbild / Headshot"
+            name: "headshot"
+            widget: "image"
+            required: false
+            # Saves image to: repo-root/src/assets/images/
+            media_folder: "src/assets/images"
+            # Public URL: your-site.com/assets/images/
+            public_folder: "/assets/images"
+
+          - label: "CV Fil (SV)"
+            name: "cv_sv"
+            widget: "file"
+            required: false
+            # Saves file to: repo-root/src/assets/cv/
+            media_folder: "src/assets/cv"
+            # Public URL: your-site.com/assets/cv/
+            public_folder: "/assets/cv"
+
+          - label: "CV Fil (EN)"
+            name: "cv_en"
+            widget: "file"
+            required: false
+            media_folder: "src/assets/cv" # As above
+            public_folder: "/assets/cv"   # As above
+
+          # --- Rest of your structured data fields ---
+          - label: "Hero Sektion"
+            name: "hero_section"
+            widget: "object"
+            fields:
+              # ... your hero fields ...
+              - { label: "Rubrik (SV)", name: "title_sv", widget: "string" }
+              - { label: "Rubrik (EN)", name: "title_en", widget: "string" }
+              - { label: "Underrubrik (SV)", name: "subtitle_sv", widget: "text" }
+              - { label: "Underrubrik (EN)", name: "subtitle_en", widget: "text" }
+              - { label: "Kontakt Knapp Text (SV)", name: "contact_btn_sv", widget: "string" }
+              - { label: "Kontakt Knapp Text (EN)", name: "contact_btn_en", widget: "string" }
+              - { label: "CV Knapp Text (SV)", name: "cv_btn_sv", widget: "string" }
+              - { label: "CV Knapp Text (EN)", name: "cv_btn_en", widget: "string" }
+
+          - label: "Om Mig Sektion"
+            name: "about_section"
+            widget: "object"
+            fields:
+              # ... your about fields (skills look correct) ...
+              - { label: "Rubrik (SV)", name: "title_sv", widget: "string" }
+              - { label: "Rubrik (EN)", name: "title_en", widget: "string" }
+              - { label: "Text Stycke 1 (SV)", name: "text1_sv", widget: "text" }
+              - { label: "Text Stycke 1 (EN)", name: "text1_en", widget: "text" }
+              - { label: "Text Stycke 2 (SV)", name: "text2_sv", widget: "text" }
+              - { label: "Text Stycke 2 (EN)", name: "text2_en", widget: "text" }
+              - { label: "Kompetenser Rubrik (SV)", name: "skills_title_sv", widget: "string" }
+              - { label: "Kompetenser Rubrik (EN)", name: "skills_title_en", widget: "string" }
+              - label: "Kompetenslista / Skills List"
+                name: "skills"
+                widget: "list"
+                fields:
+                  - { label: "Kompetens (SV)", name: "skill_sv", widget: "string" }
+                  - { label: "Kompetens (EN)", name: "skill_en", widget: "string" }
+
+          - label: "Erfarenhet Sektion"
+            name: "experience_section"
+            widget: "object"
+            fields:
+              # ... your experience fields (job list syntax looks correct) ...
+              - { label: "Rubrik (SV)", name: "title_sv", widget: "string" }
+              - { label: "Rubrik (EN)", name: "title_en", widget: "string" }
+              - label: "Jobb / Jobs"
+                name: "jobs"
+                widget: "list"
+                fields:
+                  - { label: "Jobbtitel (SV)", name: "title_sv", widget: "string" }
+                  - { label: "Jobbtitel (EN)", name: "title_en", widget: "string" }
+                  - { label: "Företag & Plats", name: "company", widget: "string" }
+                  - { label: "Datum (SV)", name: "dates_sv", widget: "string" }
+                  - { label: "Datum (EN)", name: "dates_en", widget: "string" }
+                  - label: "Beskrivningspunkter (SV)"
+                    name: "desc_sv"
+                    widget: "list"
+                    # Correct syntax for simple list of strings:
+                    field: { label: "Punkt", name: "item", widget: "string" }
+                  - label: "Beskrivningspunkter (EN)"
+                    name: "desc_en"
+                    widget: "list"
+                    # Correct syntax for simple list of strings:
+                    field: { label: "Item", name: "item", widget: "string" }
+
+
+          - label: "Utbildning Sektion"
+            name: "education_section"
+            widget: "object"
+            fields:
+              # ... your education fields (list syntax looks okay) ...
+               - { label: "Rubrik (SV)", name: "title_sv", widget: "string" }
+               - { label: "Rubrik (EN)", name: "title_en", widget: "string" }
+               - label: "Utbildningar / Educations"
+                 name: "educations"
+                 widget: "list"
+                 fields:
+                   - { label: "Titel/Program (SV)", name: "title_sv", widget: "string" }
+                   - { label: "Titel/Program (EN)", name: "title_en", widget: "string" }
+                   - { label: "Institution", name: "institution", widget: "string" }
+                   - { label: "Datum (SV)", name: "dates_sv", widget: "string", hint: "Inkludera (Pågående) om applicerbart" }
+                   - { label: "Datum (EN)", name: "dates_en", widget: "string", hint: "Include (Ongoing) if applicable" }
+                   - { label: "Detaljer/Inriktning (SV)", name: "details_sv", widget: "string", required: false }
+                   - { label: "Detaljer/Inriktning (EN)", name: "details_en", widget: "string", required: false }
+               - { label: "Språk Rubrik (SV)", name: "lang_title_sv", widget: "string"}
+               - { label: "Språk Rubrik (EN)", name: "lang_title_en", widget: "string"}
+               - label: "Språk / Languages"
+                 name: "languages"
+                 widget: "list"
+                 fields:
+                   - { label: "Språk Namn (SV)", name: "name_sv", widget: "string"}
+                   - { label: "Språk Namn (EN)", name: "name_en", widget: "string"}
+                   - { label: "Nivå (SV)", name: "level_sv", widget: "string"}
+                   - { label: "Nivå (EN)", name: "level_en", widget: "string"}
+
+          - label: "Kontakt Sektion"
+            name: "contact_section"
+            widget: "object"
+            fields:
+              # ... your contact fields ...
+               - { label: "Rubrik (SV)", name: "title_sv", widget: "string" }
+               - { label: "Rubrik (EN)", name: "title_en", widget: "string" }
+               - { label: "Intro Text (SV)", name: "intro_sv", widget: "text" }
+               - { label: "Intro Text (EN)", name: "intro_en", widget: "text" }
+               - { label: "Email Etikett (SV)", name: "email_label_sv", widget: "string" }
+               - { label: "Email Etikett (EN)", name: "email_label_en", widget: "string" }
+               - { label: "Email Adress", name: "email_address", widget: "string"}
+               - { label: "Telefon Etikett (SV)", name: "phone_label_sv", widget: "string" }
+               - { label: "Telefon Etikett (EN)", name: "phone_label_en", widget: "string" }
+               - { label: "Telefonnummer", name: "phone_number", widget: "string" }
+               - { label: "LinkedIn Etikett (SV)", name: "linkedin_label_sv", widget: "string" }
+               - { label: "LinkedIn Etikett (EN)", name: "linkedin_label_en", widget: "string" }
+               - { label: "LinkedIn Länk Text (SV)", name: "linkedin_link_text_sv", widget: "string" }
+               - { label: "LinkedIn Länk Text (EN)", name: "linkedin_link_text_en", widget: "string" }
+               - { label: "LinkedIn URL", name: "linkedin_url", widget: "string"}
+               - { label: "Plats Etikett (SV)", name: "location_label_sv", widget: "string" }
+               - { label: "Plats Etikett (EN)", name: "location_label_en", widget: "string" }
+               - { label: "Plats Text (SV)", name: "location_text_sv", widget: "string"}
+               - { label: "Plats Text (EN)", name: "location_text_en", widget: "string"}
+
+          - label: "Sidfot / Footer"
+            name: "footer_section"
+            widget: "object"
+            fields:
+              # ... your footer fields ...
+              - { label: "Copyright Text (SV)", name: "rights_sv", widget: "string"}
+              - { label: "Copyright Text (EN)", name: "rights_en", widget: "string"}
+              - { label: "Namn", name: "name", widget: "string"}
